@@ -6,11 +6,40 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
+    %nav.navbar.navbar-default
+      .container-fluid
+        .navbar-header
+          %button.navbar-toggle.collapsed{"aria-expanded" => "false", "data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
+            %span.sr-only Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+          %ul.nav.navbar-nav
+            %li.active
+              = link_to root_path do
+                PinBox
+              %span.sr-only (current)
+            %li
+              = link_to new_pin_path do
+                New Pin
+          %ul.nav.navbar-nav.navbar-right
+            - if user_signed_in?
+              %li
+                = link_to destroy_user_session_path, method: :delete do
+                  Sign Out
+              %li
+                = link_to edit_user_registration_path do
+                  profile
+            -else
+              %li
+                = link_to user_session_path do
+                  %span.glyphicon.glyphicon-user
     .container
       .row
         .col-md-12
           -flash.each do |name, msg|
             =content_tag(:div, msg, class: 'alert alert-info')
-        .row
-          .col-md-12
-            = yield
+      .row
+        .col-md-12
+          = yield

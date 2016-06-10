@@ -1,5 +1,6 @@
 class PinsController < ApplicationController
   before_action :find_pin, only:[:destroy, :edit, :update, :show ]
+  before_action :authenticate_user!, only:[:new, :destroy, :edit]
 
   def index
   end

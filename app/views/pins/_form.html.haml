@@ -1,5 +1,4 @@
 = simple_form_for(@pin, html: { multipart: true }) do |f|
-  
   - if @pin.errors.any?
     #error_explanation
       %h2
@@ -8,7 +7,6 @@
       %ul
         - @pin.errors.full_messages.each do |msg|
           %li= msg
-
   .form-group
     = f.text_field :title, placeholder: 'enter title', class: 'form-control'
 
