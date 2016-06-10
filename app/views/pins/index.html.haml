@@ -1,2 +1,4 @@
 %h2 welcome to index page
-= link_to 'new pin', new_pin_path
+- @pins.each do |pin|
+ %p= link_to pin.title, pin_path(pin)
+= link_to 'new pin', new_pin_path, class: 'btn btn-default'

@@ -3,6 +3,7 @@ class PinsController < ApplicationController
   before_action :authenticate_user!, only:[:new, :destroy, :edit]
 
   def index
+    @pins = Pin.all.order('created_at DESC')
   end
 
   def new
@@ -11,6 +12,7 @@ class PinsController < ApplicationController
 
   def create
     @pin = Pin.new(pin_params)
+    @pin.user = current_user
     if @pin.save
       redirect_to @pin, notice: 'successfully Created Pin'
     else
@@ -19,14 +21,23 @@ class PinsController < ApplicationController
   end
 
   def destroy
-    if @pin.destroy
-      redirect_to pins_path, notice: 'successfully Deleted the Pin'
+    if @pin.user == current_user
+      if @pin.destroy
+        redirect_to pins_path, notice: 'successfully Deleted the Pin'
+      else
+        redirect_to @pin, notice: 'Error in Deleting the Pin'
+      end
     else
-      redirect_to @pin, notice: 'Error in Deleting the Pin'
+      redirect_to @pin, notice: 'You cant delete others Pin'
     end
   end
 
   def edit
+    if @pin.user == current_user
+      render 'edit'
+    else
+      render 'edit', notice: 'You cant edit others Pins'
+    end
   end
 
   def update
