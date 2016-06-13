@@ -7,4 +7,10 @@
 %p
 = link_to 'edit', edit_pin_path(@pin), class: 'btn btn-default'
 = link_to 'delete', pin_path(@pin), method: :delete, class: 'btn btn-default'
+= link_to like_pin_path(@pin), method: :put, class: 'btn btn-default btn-sm' do
+  %span.glyphicon.glyphicon-chevron-up
+    like #{@pin.get_upvotes.size}
+= link_to dislike_pin_path(@pin), method: :put, class: 'btn btn-default btn-sm' do
+  %span.glyphicon.glyphicon-chevron-down
+    dislike #{@pin.get_downvotes.size}
 = link_to 'Back', root_path
